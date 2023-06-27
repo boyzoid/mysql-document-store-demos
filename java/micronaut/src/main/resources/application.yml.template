@@ -1,0 +1,14 @@
+micronaut:
+  application:
+    name: docStoreMicronautJavaDemo
+netty:
+  default:
+    allocator:
+      max-order: 3
+docstore:
+  user: changeme
+  password: changeme
+  host: changeme
+  port: 33060
+  schema: doc_store_demo
+  collection: scores
