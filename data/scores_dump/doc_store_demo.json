@@ -1,0 +1,16 @@
+{
+    "schema": "doc_store_demo",
+    "includesDdl": true,
+    "includesViewsDdl": true,
+    "includesData": true,
+    "tables": [
+        "scores"
+    ],
+    "views": [],
+    "events": [],
+    "functions": [],
+    "procedures": [],
+    "basenames": {
+        "scores": "doc_store_demo@scores"
+    }
+}

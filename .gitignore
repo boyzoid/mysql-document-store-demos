@@ -1,0 +1,7 @@
+/*.iml
+/.idea/
+/data/get_scores.sql
+/data/score.json
+/data/dump
+/node/express/.env
+/node/express/node_modules/
