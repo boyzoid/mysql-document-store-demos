@@ -19,12 +19,12 @@
     "server": "sstroz-mac",
     "serverVersion": "8.0.34",
     "binlogFile": "binlog.000033",
-    "binlogPosition": 211500356,
-    "gtidExecuted": "d6867724-c7e1-11ed-81ad-d612d80798e7:1-9026",
+    "binlogPosition": 504059718,
+    "gtidExecuted": "d6867724-c7e1-11ed-81ad-d612d80798e7:1-40602",
     "gtidExecutedInconsistent": false,
     "consistent": true,
     "partialRevokes": false,
     "compatibilityOptions": [],
     "capabilities": [],
-    "begin": "2023-09-12 10:00:39"
+    "begin": "2023-09-12 13:05:50"
 }
