@@ -1,0 +1,26 @@
+{
+    "options": {
+        "schema": "doc_store_demo",
+        "table": "scores",
+        "columns": [
+            "doc"
+        ],
+        "defaultCharacterSet": "utf8mb4",
+        "fieldsTerminatedBy": "\t",
+        "fieldsEnclosedBy": "",
+        "fieldsOptionallyEnclosed": false,
+        "fieldsEscapedBy": "\\",
+        "linesTerminatedBy": "\n"
+    },
+    "triggers": [],
+    "includesData": true,
+    "includesDdl": true,
+    "extension": "tsv.zst",
+    "chunking": true,
+    "compression": "zstd",
+    "primaryIndex": [
+        "_id"
+    ],
+    "partitions": [],
+    "basenames": {}
+}

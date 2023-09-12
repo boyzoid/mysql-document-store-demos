@@ -1,0 +1,12 @@
+{
+    "end": "2023-09-12 10:00:40",
+    "dataBytes": 13327226,
+    "tableDataBytes": {
+        "doc_store_demo": {
+            "scores": 13327226
+        }
+    },
+    "chunkFileBytes": {
+        "doc_store_demo@scores@@0.tsv.zst": 13327226
+    }
+}
