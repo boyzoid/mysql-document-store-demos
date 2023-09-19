@@ -1,5 +1,7 @@
 package com.boyzoid.controller;
 
+import com.boyzoid.domain.dto.CourseSummaryDTO;
+import com.boyzoid.repository.ScoreRepository;
 import com.boyzoid.service.ScoreService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micronaut.core.annotation.Nullable;
@@ -16,10 +18,13 @@ import java.util.*;
 @Controller
 public class ScoreController {
     private final ScoreService scoreService;
+
+    private final ScoreRepository scoreRepository;
     private final Integer defaultLimit = 50;
 
-    public ScoreController(ScoreService scoreService) {
+    public ScoreController(ScoreService scoreService, ScoreRepository scoreRepository) {
         this.scoreService = scoreService;
+        this.scoreRepository = scoreRepository;
     }
 
     @Get(value="/", produces = MediaType.APPLICATION_JSON)
@@ -68,11 +73,19 @@ public class ScoreController {
         return HttpResponse.ok(getResult(scores));
     }
 
-    @Get(value = "/getAggregateCourseScore", produces = MediaType.APPLICATION_JSON)
-    public HttpResponse<Object>getAggregateCourseScore() throws JsonProcessingException {
-        ArrayList<Object> scores = scoreService.getAggregateCourseScore();
-        return HttpResponse.ok(getResult(scores));
+    @Get(value = "/getAggregateCourseScore{/source}", produces = MediaType.APPLICATION_JSON)
+    public HttpResponse<Object>getAggregateCourseScore(@Nullable String source) throws JsonProcessingException {
+        if( Objects.isNull(source)){
+            ArrayList<Object> scores = scoreService.getAggregateCourseScore();
+            return HttpResponse.ok(getResult(scores));
+        }
+        else{
+            ArrayList<CourseSummaryDTO> mnScores = scoreRepository.courseSummary();
+            return HttpResponse.ok(getResult(mnScores));
+        }
+
     }
+
     @Post( value="/score", produces = MediaType.APPLICATION_JSON)
     public HttpResponse<Object>addScore(@Body JSONObject score){
         Boolean success = scoreService.addScore(score.toJSONString());
