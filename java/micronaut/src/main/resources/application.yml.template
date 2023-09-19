@@ -5,6 +5,14 @@ netty:
   default:
     allocator:
       max-order: 3
+datasources:
+  default:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    db-type: mysql
+    dialect: MYSQL
+    username: changeme
+    password: changeme
+    url: jdbc:mysql://changeme:3306/doc_store_demo
 docstore:
   user: changeme
   password: changeme
