@@ -18,13 +18,11 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-jdbc")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("jakarta.annotation:jakarta.annotation-api")
-    implementation("mysql:mysql-connector-java:8.0.33")
     implementation("io.micronaut:micronaut-validation")
-    implementation 'com.googlecode.json-simple:json-simple:1.1'
+    implementation("com.googlecode.json-simple:json-simple:1.1")
     implementation("jakarta.persistence:jakarta.persistence-api:2.2.3")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
-
-
+    implementation("mysql:mysql-connector-java:8.0.33")
 }
 
 

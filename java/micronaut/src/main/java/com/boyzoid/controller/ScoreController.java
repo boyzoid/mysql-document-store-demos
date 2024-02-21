@@ -32,7 +32,7 @@ public class ScoreController {
         return HttpResponse.ok(CollectionUtils.mapOf("message", "Micronaut/Java Demo main endpoint"));
     }
     @Get(value = "/list", produces = MediaType.APPLICATION_JSON)
-    public HttpResponse<Object> listAll(@Nullable Integer limit ) throws JsonProcessingException {
+    public HttpResponse<Object> listAll() throws JsonProcessingException {
         ArrayList<Object> scores = scoreService.getAllScores();
         return HttpResponse.ok(getResult(scores));
     }
@@ -83,7 +83,6 @@ public class ScoreController {
             ArrayList<CourseSummaryDTO> mnScores = scoreRepository.courseSummary();
             return HttpResponse.ok(getResult(mnScores));
         }
-
     }
 
     @Post( value="/score", produces = MediaType.APPLICATION_JSON)
