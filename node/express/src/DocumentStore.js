@@ -72,6 +72,7 @@ class DocumentStore {
                 'score',
                 'date',
                 'course.name as courseName'])
+            .sort(['date desc'])
             .execute()
         let data = results.fetchAll()
         session.close()
@@ -88,7 +89,7 @@ class DocumentStore {
                 'score', 'date',
                 'course.name as courseName'
             ])
-            .sort(['date desc'])
+            .sort(['date desc', 'lastName'])
             .execute()
         let scores = results.fetchAll()
         session.close()
@@ -100,7 +101,14 @@ class DocumentStore {
         const collection = db.getCollection(this.#collectionName)
         let results = await collection.find("lower(lastName) like :lastNameParam")
             .bind('lastNameParam', lastName.toLowerCase() + '%')
-            .sort(['lastName', 'firstName'])
+            .fields([
+                'concat(firstName, " ", lastName) as golfer',
+                'score',
+                'date as datePlayed',
+                'course.name as courseName',
+                'holeScores',
+                '_id'
+            ]).sort(['date desc'])
             .execute();
         let data = results.fetchAll()
         session.close()
@@ -128,7 +136,6 @@ class DocumentStore {
                 'course.name as courseName',
                 'round(avg(score), 2)  as avg',
                 'min(cast(score as unsigned)) as lowestScore',
-                'max(cast(score as unsigned)) as highestScore',
                 'count(score) as numberOfRounds'
             ])
             .groupBy(['course.name'])
@@ -176,17 +183,17 @@ class DocumentStore {
         const session = await this.#pool.getSession()
         const sql = `
         WITH aggScores AS
-            (SELECT doc ->> '$.course.name' course,
-                MIN(score)              minScore,
-                MAX(score)              maxScore,
-                number
-            FROM scores,
-                JSON_TABLE(doc, '$.holeScores[*]'
-                    COLUMNS (
-                        score INT PATH '$.score',
-                        number INT PATH '$.number')) AS scores
-            GROUP BY course, number
-            ORDER BY course, number)
+        (SELECT doc ->> '$.course.name' course,
+            MIN(score)              minScore,
+            MAX(score)              maxScore,
+            number
+        FROM scores,
+            JSON_TABLE(doc, '$.holeScores[*]'
+        COLUMNS (
+            score INT PATH '$.score',
+            number INT PATH '$.number')) AS scores
+        GROUP BY course, number
+        ORDER BY course, number)
         SELECT JSON_OBJECT('courseName', course, 'bestScore', sum(minScore))
         FROM aggScores
         GROUP BY course
@@ -219,7 +226,7 @@ class DocumentStore {
         const collection = db.getCollection(this.#collectionName)
         try {
             await collection.modify("_id = :idParam")
-                .set("holeSores", data.holeScores)
+                .set("holeScores", data.holeScores)
                 .bind("idParam", data._id)
                 .execute()
         }

@@ -123,6 +123,11 @@ public class ScoreService {
         Schema schema = session.getSchema(this.schema);
         Collection col = schema.getCollection(this.collection);
         DocResult result = col.find("lower(lastName) like :lastNameParam")
+                .fields("concat(firstName, \" \", lastName) as golfer, " +
+                        "score as score, " +
+                        "course.name as course, " +
+                        "`date` as datePlayed," +
+                        "json_length(holeScores) as holeCount")
                 .bind("lastNameParam", lastName.toLowerCase()+"%")
                 .sort("lastName, firstName, `date` desc")
                 .execute();
