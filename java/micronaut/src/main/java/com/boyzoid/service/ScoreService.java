@@ -127,7 +127,7 @@ public class ScoreService {
                         "score as score, " +
                         "course.name as course, " +
                         "`date` as datePlayed," +
-                        "json_length(holeScores) as holeCount")
+                        "holeScores as holeScores")
                 .bind("lastNameParam", lastName.toLowerCase()+"%")
                 .sort("lastName, firstName, `date` desc")
                 .execute();
